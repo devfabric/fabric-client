@@ -151,7 +151,7 @@ github.com/hyperledger/fabric-amcl/amcl
 github.com/hyperledger/fabric-amcl/amcl/FP256BN
 # github.com/hyperledger/fabric-lib-go v1.0.0
 github.com/hyperledger/fabric-lib-go/healthz
-# github.com/hyperledger/fabric-protos-go v0.0.0-20191121202242-f5500d5e3e85
+# github.com/hyperledger/fabric-protos-go v0.0.0-20190821180310-6b6ac9042dfd
 github.com/hyperledger/fabric-protos-go/common
 github.com/hyperledger/fabric-protos-go/discovery
 github.com/hyperledger/fabric-protos-go/gossip
@@ -161,7 +161,7 @@ github.com/hyperledger/fabric-protos-go/msp
 github.com/hyperledger/fabric-protos-go/orderer
 github.com/hyperledger/fabric-protos-go/orderer/etcdraft
 github.com/hyperledger/fabric-protos-go/peer
-# github.com/hyperledger/fabric-sdk-go v1.0.0-beta1.0.20200106161850-8f3d32c9d1a6
+# github.com/hyperledger/fabric-sdk-go v1.0.0-beta1
 github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric-ca/api
 github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric-ca/lib
 github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric-ca/lib/attrmgr
@@ -212,7 +212,7 @@ github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/msp
 github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/msp/cache
 github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/protoutil
 github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkinternal/configtxgen/encoder
-github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkinternal/configtxgen/genesisconfig
+github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkinternal/configtxgen/localconfig
 github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkinternal/configtxlator/update
 github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkinternal/pkg/identity
 github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/cryptosuitebridge
@@ -315,6 +315,10 @@ github.com/hyperledger/fabric-sdk-go/pkg/util/test
 github.com/hyperledger/fabric-sdk-go/test/metadata
 github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/common/cauthdsl
 github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/internal/protoutil
+# github.com/jonluo94/cool v0.0.0-20200518072032-4e2c0df52183
+github.com/jonluo94/cool/json
+# github.com/json-iterator/go v1.1.9
+github.com/json-iterator/go
 # github.com/konsorten/go-windows-terminal-sequences v1.0.1
 github.com/konsorten/go-windows-terminal-sequences
 # github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515
@@ -327,6 +331,10 @@ github.com/matttproud/golang_protobuf_extensions/pbutil
 github.com/miekg/pkcs11
 # github.com/mitchellh/mapstructure v1.1.2
 github.com/mitchellh/mapstructure
+# github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+github.com/modern-go/concurrent
+# github.com/modern-go/reflect2 v1.0.1
+github.com/modern-go/reflect2
 # github.com/morikuni/aec v1.0.0
 github.com/morikuni/aec
 # github.com/op/go-logging v0.0.0-20160315200505-970db520ece7

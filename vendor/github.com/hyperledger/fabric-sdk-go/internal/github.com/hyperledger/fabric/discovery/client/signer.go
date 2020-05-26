@@ -77,7 +77,7 @@ func (ms *MemoizeSigner) memorize(msg, signature []byte) {
 
 }
 
-// shrinkMemory evicts random messages from memory
+// evict evicts random messages from memory
 // until its size is smaller than maxEntries
 func (ms *MemoizeSigner) shrinkMemory() {
 	ms.Lock()

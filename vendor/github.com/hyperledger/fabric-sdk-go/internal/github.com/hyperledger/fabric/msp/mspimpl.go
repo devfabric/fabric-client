@@ -130,7 +130,7 @@ func newBccspMsp(version MSPVersion, defaultBCCSP core.CryptoSuite) (MSP, error)
 		theMsp.internalValidateIdentityOusFunc = theMsp.validateIdentityOUsV11
 		theMsp.internalSatisfiesPrincipalInternalFunc = theMsp.satisfiesPrincipalInternalV13
 		theMsp.internalSetupAdmin = theMsp.setupAdminsPreV142
-	case MSPv1_4_3:
+	case MSPv1_4_2:
 		theMsp.internalSetupFunc = theMsp.setupV142
 		theMsp.internalValidateIdentityOusFunc = theMsp.validateIdentityOUsV142
 		theMsp.internalSatisfiesPrincipalInternalFunc = theMsp.satisfiesPrincipalInternalV142
@@ -406,7 +406,7 @@ func (msp *bccspmsp) deserializeIdentityInternal(serializedIdentity []byte) (Ide
 	return newIdentity(cert, pub, msp)
 }
 
-// SatisfiesPrincipal returns nil if the identity matches the principal or an error otherwise
+// SatisfiesPrincipal returns null if the identity matches the principal or an error otherwise
 func (msp *bccspmsp) SatisfiesPrincipal(id Identity, principal *m.MSPPrincipal) error {
 	principals, err := collectPrincipals(principal, msp.GetVersion())
 	if err != nil {

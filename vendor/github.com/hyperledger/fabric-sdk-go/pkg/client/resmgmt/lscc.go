@@ -39,10 +39,9 @@ type chaincodeDeployRequest struct {
 	Name       string
 	Path       string
 	Version    string
-	Lang       pb.ChaincodeSpec_Type
 	Args       [][]byte
 	Policy     *common.SignaturePolicyEnvelope
-	CollConfig []*pb.CollectionConfig
+	CollConfig []*common.CollectionConfig
 }
 
 // createChaincodeDeployProposal creates an instantiate or upgrade chaincode proposal.
@@ -53,7 +52,7 @@ func createChaincodeDeployProposal(txh fab.TransactionHeader, deploy chaincodePr
 	args = append(args, []byte(channelID))
 
 	ccds := &pb.ChaincodeDeploymentSpec{ChaincodeSpec: &pb.ChaincodeSpec{
-		Type: chaincode.Lang, ChaincodeId: &pb.ChaincodeID{Name: chaincode.Name, Path: chaincode.Path, Version: chaincode.Version},
+		Type: pb.ChaincodeSpec_GOLANG, ChaincodeId: &pb.ChaincodeID{Name: chaincode.Name, Path: chaincode.Path, Version: chaincode.Version},
 		Input: &pb.ChaincodeInput{Args: chaincode.Args}}}
 	ccdsBytes, err := protoutil.Marshal(ccds)
 	if err != nil {
@@ -71,7 +70,7 @@ func createChaincodeDeployProposal(txh fab.TransactionHeader, deploy chaincodePr
 	args = append(args, []byte(vscc))
 
 	if chaincode.CollConfig != nil {
-		collConfigBytes, err := proto.Marshal(&pb.CollectionConfigPackage{Config: chaincode.CollConfig})
+		collConfigBytes, err := proto.Marshal(&common.CollectionConfigPackage{Config: chaincode.CollConfig})
 		if err != nil {
 			return nil, errors.WithMessage(err, "marshal of collection policy failed")
 		}
@@ -91,7 +90,6 @@ func createChaincodeDeployProposal(txh fab.TransactionHeader, deploy chaincodePr
 
 	cir := fab.ChaincodeInvokeRequest{
 		ChaincodeID: lscc,
-		Lang:        chaincode.Lang,
 		Fcn:         fcn,
 		Args:        args,
 	}

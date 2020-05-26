@@ -17,7 +17,6 @@ import (
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/multi"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
-	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/status"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/logging"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/core"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
@@ -29,7 +28,6 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/util/pathvar"
 	"github.com/mitchellh/mapstructure"
 	"github.com/pkg/errors"
-	grpcCodes "google.golang.org/grpc/codes"
 )
 
 var logger = logging.NewLogger("fabsdk/fab")
@@ -78,23 +76,6 @@ const (
 )
 
 var (
-	defaultDiscoveryRetryableCodes = map[status.Group][]status.Code{
-		status.GRPCTransportStatus: {
-			status.Code(grpcCodes.Unavailable),
-		},
-		status.DiscoveryServerStatus: {
-			status.QueryEndorsers,
-		},
-	}
-
-	defaultDiscoveryRetryOpts = retry.Opts{
-		Attempts:       6,
-		InitialBackoff: 500 * time.Millisecond,
-		MaxBackoff:     5 * time.Second,
-		BackoffFactor:  1.75,
-		RetryableCodes: defaultDiscoveryRetryableCodes,
-	}
-
 	defaultChannelPolicies = &ChannelPolicies{
 		QueryChannelConfig: QueryChannelConfigPolicy{
 			MaxTargets:   defaultMaxTargets,
@@ -104,7 +85,7 @@ var (
 		Discovery: DiscoveryPolicy{
 			MaxTargets:   defaultMaxTargets,
 			MinResponses: defaultMinResponses,
-			RetryOpts:    defaultDiscoveryRetryOpts,
+			RetryOpts:    retry.Opts{},
 		},
 		Selection: SelectionPolicy{
 			SortingStrategy:         BlockHeightPriority,
@@ -1015,10 +996,6 @@ func (c *EndpointConfig) loadDefaultDiscoveryPolicy(policy *fab.DiscoveryPolicy)
 
 	if policy.MinResponses == 0 {
 		policy.MinResponses = defaultMinResponses
-	}
-
-	if len(policy.RetryOpts.RetryableCodes) == 0 {
-		policy.RetryOpts.RetryableCodes = defaultDiscoveryRetryableCodes
 	}
 }
 

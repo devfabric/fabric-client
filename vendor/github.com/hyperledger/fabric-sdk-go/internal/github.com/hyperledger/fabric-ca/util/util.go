@@ -149,7 +149,15 @@ func CreateToken(csp core.CryptoSuite, cert []byte, key core.Key, method, uri st
 
 	var token string
 
+	//The RSA Key Gen is commented right now as there is bccsp does
 	switch publicKey.(type) {
+	/*
+		case *rsa.PublicKey:
+			token, err = GenRSAToken(csp, cert, key, body)
+			if err != nil {
+				return "", err
+			}
+	*/
 	case *ecdsa.PublicKey:
 		token, err = GenECDSAToken(csp, cert, key, method, uri, body, fabCACompatibilityMode)
 		if err != nil {
@@ -158,6 +166,31 @@ func CreateToken(csp core.CryptoSuite, cert []byte, key core.Key, method, uri st
 	}
 	return token, nil
 }
+
+//GenRSAToken signs the http body and cert with RSA using RSA private key
+// @csp : BCCSP instance
+/*
+func GenRSAToken(csp core.CryptoSuite, cert []byte, key []byte, body []byte) (string, error) {
+	privKey, err := GetRSAPrivateKey(key)
+	if err != nil {
+		return "", err
+	}
+	b64body := B64Encode(body)
+	b64cert := B64Encode(cert)
+	bodyAndcert := b64body + "." + b64cert
+	hash := sha512.New384()
+	hash.Write([]byte(bodyAndcert))
+	h := hash.Sum(nil)
+	RSAsignature, err := rsa.SignPKCS1v15(rand.Reader, privKey, crypto.SHA384, h[:])
+	if err != nil {
+		return "", errors.Wrap(err, "Failed to rsa.SignPKCS1v15")
+	}
+	b64sig := B64Encode(RSAsignature)
+	token := b64cert + "." + b64sig
+
+	return  token, nil
+}
+*/
 
 //GenECDSAToken signs the http body and cert with ECDSA using EC private key
 func GenECDSAToken(csp core.CryptoSuite, cert []byte, key core.Key, method, uri string, body []byte, fabCACompatibilityMode bool) (string, error) {

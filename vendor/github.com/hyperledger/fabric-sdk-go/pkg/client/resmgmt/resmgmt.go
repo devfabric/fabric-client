@@ -72,10 +72,9 @@ type InstantiateCCRequest struct {
 	Name       string
 	Path       string
 	Version    string
-	Lang       pb.ChaincodeSpec_Type
 	Args       [][]byte
 	Policy     *common.SignaturePolicyEnvelope
-	CollConfig []*pb.CollectionConfig
+	CollConfig []*common.CollectionConfig
 }
 
 // InstantiateCCResponse contains response parameters for instantiate chaincode
@@ -88,10 +87,9 @@ type UpgradeCCRequest struct {
 	Name       string
 	Path       string
 	Version    string
-	Lang       pb.ChaincodeSpec_Type
 	Args       [][]byte
 	Policy     *common.SignaturePolicyEnvelope
-	CollConfig []*pb.CollectionConfig
+	CollConfig []*common.CollectionConfig
 }
 
 // UpgradeCCResponse contains response parameters for upgrade chaincode
@@ -620,7 +618,7 @@ func (rc *Client) QueryInstantiatedChaincodes(channelID string, options ...Reque
 //
 // Returns:
 // list of collections config
-func (rc *Client) QueryCollectionsConfig(channelID string, chaincodeName string, options ...RequestOption) (*pb.CollectionConfigPackage, error) {
+func (rc *Client) QueryCollectionsConfig(channelID string, chaincodeName string, options ...RequestOption) (*common.CollectionConfigPackage, error) {
 	opts, err := rc.prepareRequestOpts(options...)
 	if err != nil {
 		return nil, err
@@ -793,7 +791,7 @@ func (rc *Client) verifyTPSignature(channelService fab.ChannelService, txProposa
 
 // sendCCProposal sends proposal for type  Instantiate, Upgrade
 func (rc *Client) sendCCProposal(reqCtx reqContext.Context, ccProposalType chaincodeProposalType, channelID string, req InstantiateCCRequest, opts requestOptions) (fab.TransactionID, error) {
-	if err := checkRequiredCCProposalParams(channelID, &req); err != nil {
+	if err := checkRequiredCCProposalParams(channelID, req); err != nil {
 		return fab.EmptyTransactionID, err
 	}
 
@@ -868,7 +866,7 @@ func (rc *Client) sendTransactionAndCheckEvent(eventService fab.EventService, tp
 	}
 }
 
-func checkRequiredCCProposalParams(channelID string, req *InstantiateCCRequest) error {
+func checkRequiredCCProposalParams(channelID string, req InstantiateCCRequest) error {
 
 	if channelID == "" {
 		return errors.New("must provide channel ID")
@@ -877,12 +875,6 @@ func checkRequiredCCProposalParams(channelID string, req *InstantiateCCRequest) 
 	if req.Name == "" || req.Version == "" || req.Path == "" || req.Policy == nil {
 		return errors.New("Chaincode name, version, path and policy are required")
 	}
-
-	// Forward compatibility, set Lang to golang by default
-	if req.Lang == 0 || pb.ChaincodeSpec_Type_name[int32(req.Lang)] == "" {
-		req.Lang = pb.ChaincodeSpec_GOLANG
-	}
-
 	return nil
 }
 

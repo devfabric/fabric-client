@@ -8,7 +8,7 @@ Notice: This file has been modified for Hyperledger Fabric SDK Go usage.
 Please review third_party pinning scripts and patches for more details.
 */
 
-package genesisconfig
+package localconfig
 
 import (
 	"time"
@@ -25,6 +25,10 @@ const (
 )
 
 const (
+	// TestChainID is the channel name used for testing purposes when one is
+	// not given
+	TestChainID = "testchainid"
+
 	// SampleInsecureSoloProfile references the sample profile which does not
 	// include any MSPs and uses solo for ordering.
 	SampleInsecureSoloProfile = "SampleInsecureSolo"
@@ -62,6 +66,9 @@ const (
 	// AdminRoleAdminPrincipal is set as AdminRole to cause the MSP role of
 	// type Admin to be used as the admin principal default
 	AdminRoleAdminPrincipal = "Role.ADMIN"
+	// MemberRoleAdminPrincipal is set as AdminRole to cause the MSP role of
+	// type Member to be used as the admin principal default
+	MemberRoleAdminPrincipal = "Role.MEMBER"
 )
 
 // TopLevel consists of the structs used by the configtxgen tool.
@@ -145,7 +152,8 @@ type AnchorPeer struct {
 	Port int    `yaml:"Port"`
 }
 
-// Orderer contains configuration associated to a channel.
+// Orderer contains configuration which is used for the
+// bootstrapping of an orderer by the provisional bootstrapper.
 type Orderer struct {
 	OrdererType   string                   `yaml:"OrdererType"`
 	Addresses     []string                 `yaml:"Addresses"`

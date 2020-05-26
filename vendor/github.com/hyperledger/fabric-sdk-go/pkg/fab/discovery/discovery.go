@@ -8,7 +8,6 @@ package discovery
 
 import (
 	"context"
-	"strings"
 	"sync"
 
 	"github.com/hyperledger/fabric-protos-go/discovery"
@@ -71,31 +70,18 @@ func (c *Client) Send(ctx context.Context, req *Request, targets ...fab.PeerConf
 	var responses []Response
 	var errs error
 
-	reqCtx, cancel := context.WithCancel(ctx)
-	defer cancel()
-
 	for _, t := range targets {
 		go func(target fab.PeerConfig) {
 			defer wg.Done()
 
-			targetCtx, cancelTarget := context.WithCancel(reqCtx)
-			defer cancelTarget()
-
-			resp, err := c.send(targetCtx, req.r, target)
+			resp, err := c.send(ctx, req.r, target)
 			lock.Lock()
 			if err != nil {
-				if !isContextCanceled(err) {
-					errs = multi.Append(errs, errors.WithMessage(err, "From target: "+target.URL))
-					logger.Debugf("... got discovery error response from [%s]: %s", target.URL, err)
-				} else {
-					logger.Debugf("... request to [%s] cancelled", target.URL)
-				}
+				errs = multi.Append(errs, errors.WithMessage(err, "From target: "+target.URL))
+				logger.Debugf("... got discovery error response from [%s]: %s", target.URL, err)
 			} else {
 				responses = append(responses, &response{Response: resp, target: target.URL})
 				logger.Debugf("... got discovery response from [%s]", target.URL)
-
-				// Cancel all outstanding requests
-				cancel()
 			}
 			lock.Unlock()
 		}(t)
@@ -108,7 +94,6 @@ func (c *Client) Send(ctx context.Context, req *Request, targets ...fab.PeerConf
 func (c *Client) send(reqCtx context.Context, req *discclient.Request, target fab.PeerConfig) (discclient.Response, error) {
 	opts := comm.OptsFromPeerConfig(&target)
 	opts = append(opts, comm.WithConnectTimeout(c.ctx.EndpointConfig().Timeout(fab.DiscoveryConnection)))
-	opts = append(opts, comm.WithParentContext(reqCtx))
 
 	conn, err := comm.NewConnection(c.ctx, target.URL, opts...)
 	if err != nil {
@@ -153,8 +138,4 @@ func newAuthInfo(ctx fabcontext.Client) (*discovery.AuthInfo, error) {
 		ClientIdentity:    identity,
 		ClientTlsCertHash: hash,
 	}, nil
-}
-
-func isContextCanceled(err error) bool {
-	return strings.Contains(err.Error(), context.Canceled.Error())
 }

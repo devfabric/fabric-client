@@ -9,6 +9,7 @@ package cryptoutil
 import (
 	"crypto"
 	"crypto/ecdsa"
+	"crypto/rsa"
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/pem"
@@ -101,6 +102,8 @@ func X509KeyPair(certPEMBlock []byte, pk core.Key, cs core.CryptoSuite) (tls.Cer
 	}
 
 	switch x509Cert.PublicKey.(type) {
+	case *rsa.PublicKey:
+		cert.PrivateKey = &PrivateKey{cs, pk, &rsa.PublicKey{}}
 	case *ecdsa.PublicKey:
 		cert.PrivateKey = &PrivateKey{cs, pk, &ecdsa.PublicKey{}}
 	default:

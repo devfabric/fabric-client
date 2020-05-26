@@ -248,7 +248,6 @@ func (f *FabricClient) UpgradeChaincode(chaincodeId, chaincodePath, version stri
 }
 
 func (f *FabricClient) QueryLedger() (*FabricBlockchainInfo, error) {
-
 	ledger, err := ledger.New(f.sdk.ChannelContext(f.ChannelId, fabsdk.WithUser(f.userName), fabsdk.WithOrg(f.userOrg)))
 	if err != nil {
 		// logger.Error(err.Error())
@@ -265,7 +264,6 @@ func (f *FabricClient) QueryLedger() (*FabricBlockchainInfo, error) {
 }
 
 func (f *FabricClient) QueryBlock(height uint64) (*FabricBlock, error) {
-
 	ledger, err := ledger.New(f.sdk.ChannelContext(f.ChannelId, fabsdk.WithUser(f.userName), fabsdk.WithOrg(f.userOrg)))
 	if err != nil {
 		// logger.Error(err.Error())

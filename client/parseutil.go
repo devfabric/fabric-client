@@ -7,9 +7,11 @@ import (
 	"encoding/pem"
 	"fmt"
 
-	cm "github.com/hyperledger/fabric-protos-go/common"
-	"github.com/hyperledger/fabric-protos-go/msp"
+	// cm "github.com/hyperledger/fabric-protos-go/common"
+	// "github.com/hyperledger/fabric-protos-go/msp"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
+	cm "github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/common"
+	"github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/msp"
 	"github.com/hyperledger/fabric/common/configtx"
 	"github.com/hyperledger/fabric/core/ledger/kvledger/txmgmt/rwsetutil"
 	"github.com/hyperledger/fabric/core/ledger/util"
@@ -61,11 +63,14 @@ type FabricTransactionActionRWSet struct {
 }
 
 func parseFabricBlockchainInfo(info *fab.BlockchainInfoResponse) *FabricBlockchainInfo {
-	return &FabricBlockchainInfo{
-		Number:            info.BCI.Height,
-		CurrentBlockHash:  hex.EncodeToString(info.BCI.CurrentBlockHash),
-		PreviousBlockHash: hex.EncodeToString(info.BCI.PreviousBlockHash),
+	if info != nil {
+		return &FabricBlockchainInfo{
+			Number:            info.BCI.Height,
+			CurrentBlockHash:  hex.EncodeToString(info.BCI.CurrentBlockHash),
+			PreviousBlockHash: hex.EncodeToString(info.BCI.PreviousBlockHash),
+		}
 	}
+	return nil
 }
 
 func blockParse(block *cm.Block) *common.Block {

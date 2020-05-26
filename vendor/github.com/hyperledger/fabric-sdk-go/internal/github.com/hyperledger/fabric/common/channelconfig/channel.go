@@ -143,7 +143,7 @@ func (cc *ChannelConfig) ConsortiumsConfig() *ConsortiumsConfig {
 	return cc.consortiumsConfig
 }
 
-// HashingAlgorithm returns a function pointer to the chain hashing algorithm
+// HashingAlgorithm returns a function pointer to the chain hashing algorihtm
 func (cc *ChannelConfig) HashingAlgorithm() func(input []byte) []byte {
 	return cc.hashingAlgorithm
 }
