@@ -1,23 +1,24 @@
 package client
 
 import (
-	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
-	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
-	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
-	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
-	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
-	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"
-	"github.com/hyperledger/fabric-sdk-go/pkg/fab/ccpackager/gopackager"
-	"github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/common/cauthdsl"
-	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
-	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
-	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
+	"encoding/hex"
 	"fmt"
+	"strings"
 	"time"
+
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
+	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
+	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
+	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
+	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"
+	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
+	"github.com/hyperledger/fabric-sdk-go/pkg/fab/ccpackager/gopackager"
+	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
+	"github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/common/cauthdsl"
 	cfg "github.com/jonluo94/cool/config"
 	"github.com/jonluo94/cool/log"
-	"strings"
-	"encoding/hex"
 )
 
 var logger = log.GetLogger("gosdk", log.ERROR)
@@ -424,6 +425,7 @@ func (f *FabricClient) InvokeChaincodeWithEvent(chaincodeId, fcn string, args []
 func (f *FabricClient) InvokeChaincode(chaincodeId, fcn string, args [][]byte) ([]byte, error) {
 
 	client, err := channel.New(f.sdk.ChannelContext(f.ChannelId, fabsdk.WithUser(f.userName), fabsdk.WithOrg(f.userOrg)))
+	// fabsdk.WithTargets()
 	if err != nil {
 		logger.Error(err.Error())
 		return nil, err
