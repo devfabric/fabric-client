@@ -62,4 +62,10 @@ func main() {
 	}
 	log.Println((ledger))
 
+	//查询账本
+	queryFcn := "query"
+	queryArgs := [][]byte{[]byte("a")}
+	a, _ := fabric.QueryChaincode(fabConfig.ChannelId, queryFcn, queryArgs)
+	log.Println("a的值: ", string(a))
+
 }

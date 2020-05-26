@@ -14,7 +14,7 @@ require (
 	// github.com/hyperledger/fabric-sdk-go v1.0.0-beta1
 	// github.com/hyperledger/fabric v0.0.0-20200526144037-90442afdff08
 	github.com/hyperledger/fabric-amcl v0.0.0-20200424173818-327c9e2cf77a // indirect
-	github.com/hyperledger/fabric-protos-go v0.0.0-20200506201313-25f6564b9ac4
+	github.com/hyperledger/fabric-protos-go v0.0.0-20200506201313-25f6564b9ac4 // indirect
 	// github.com/hyperledger/fabric-protos-go v0.0.0-20190821180310-6b6ac9042dfd
 	// github.com/hyperledger/fabric-sdk-go v1.0.0-beta1
 	// github.com/hyperledger/fabric-protos-go v0.0.0-20191121202242-f5500d5e3e85
