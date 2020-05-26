@@ -75,8 +75,10 @@ type Converter interface {
 
 // Policy is used to determine if a signature is valid
 type Policy interface {
-	// Evaluate takes a set of SignedData and evaluates whether this set of signatures satisfies the policy
-	Evaluate(signatureSet []*protoutil.SignedData) error
+	// EvaluateSignedData takes a set of SignedData and evaluates whether
+	// 1) the signatures are valid over the related message
+	// 2) the signing identities satisfy the policy
+	EvaluateSignedData(signatureSet []*protoutil.SignedData) error
 }
 
 // InquireablePolicy is a Policy that one can inquire

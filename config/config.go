@@ -36,7 +36,7 @@ func CheckFileIsExist(filename string) bool {
 }
 
 func LoadHPCacheConfig(dir string) (*FabricConfig, error) {
-	path := filepath.Join(dir, "./configs/cache.toml")
+	path := filepath.Join(dir, "configs/fabconfig.toml")
 	filePath, err := filepath.Abs(path)
 	if err != nil {
 		return nil, err

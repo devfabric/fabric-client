@@ -23,7 +23,6 @@ package util
 import (
 	"crypto"
 	"crypto/ecdsa"
-	"crypto/rsa"
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/hex"
@@ -42,25 +41,13 @@ import (
 )
 
 // getBCCSPKeyOpts generates a key as specified in the request.
-// This supports ECDSA and RSA.
+// This supports ECDSA.
 func getBCCSPKeyOpts(kr csr.KeyRequest, ephemeral bool) (opts core.KeyGenOpts, err error) {
 	if kr == nil {
 		return factory.GetECDSAKeyGenOpts(ephemeral), nil
 	}
 	log.Debugf("generate key from request: algo=%s, size=%d", kr.Algo(), kr.Size())
 	switch kr.Algo() {
-	case "rsa":
-		switch kr.Size() {
-		case 2048:
-			return factory.GetRSA2048KeyGenOpts(ephemeral), nil
-		case 3072:
-			return factory.GetRSA3072KeyGenOpts(ephemeral), nil
-		case 4096:
-			return factory.GetRSA4096KeyGenOpts(ephemeral), nil
-		default:
-			// Need to add a way to specify arbitrary RSA key size to bccsp
-			return nil, errors.Errorf("Invalid RSA key size: %d", kr.Size())
-		}
 	case "ecdsa":
 		switch kr.Size() {
 		case 256:
@@ -176,8 +163,6 @@ func ImportBCCSPKeyFromPEMBytes(keyBuff []byte, myCSP core.CryptoSuite, temporar
 			return nil, errors.WithMessage(err, fmt.Sprintf("Failed to import ECDSA private key for '%s'", keyFile))
 		}
 		return sk, nil
-	case *rsa.PrivateKey:
-		return nil, errors.Errorf("Failed to import RSA key from %s; RSA private key import is not supported", keyFile)
 	default:
 		return nil, errors.Errorf("Failed to import key from %s: invalid secret key type", keyFile)
 	}

@@ -26,11 +26,6 @@ const (
 	ECDSAP256        = bccsp.ECDSAP256
 	ECDSAP384        = bccsp.ECDSAP384
 	ECDSAReRand      = bccsp.ECDSAReRand
-	RSA              = bccsp.RSA
-	RSA1024          = bccsp.RSA1024
-	RSA2048          = bccsp.RSA2048
-	RSA3072          = bccsp.RSA3072
-	RSA4096          = bccsp.RSA4096
 	AES              = bccsp.AES
 	AES128           = bccsp.AES128
 	AES192           = bccsp.AES192
@@ -75,21 +70,6 @@ func GetSHAOpts() core.HashOpts {
 //GetSHA256Opts returns options relating to SHA-256.
 func GetSHA256Opts() core.HashOpts {
 	return &bccsp.SHA256Opts{}
-}
-
-//GetRSA2048KeyGenOpts returns options for RSA key generation at 2048 security.
-func GetRSA2048KeyGenOpts(ephemeral bool) core.KeyGenOpts {
-	return &bccsp.RSA2048KeyGenOpts{Temporary: ephemeral}
-}
-
-//GetRSA3072KeyGenOpts returns options for RSA key generation at 3072 security.
-func GetRSA3072KeyGenOpts(ephemeral bool) core.KeyGenOpts {
-	return &bccsp.RSA3072KeyGenOpts{Temporary: ephemeral}
-}
-
-//GetRSA4096KeyGenOpts returns options for RSA key generation at 4096 security.
-func GetRSA4096KeyGenOpts(ephemeral bool) core.KeyGenOpts {
-	return &bccsp.RSA4096KeyGenOpts{Temporary: ephemeral}
 }
 
 // GetECDSAKeyGenOpts returns options for ECDSA key generation.

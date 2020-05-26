@@ -21,7 +21,7 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/common/util"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/msp"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/protoutil"
-	genesisconfig "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkinternal/configtxgen/localconfig"
+	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkinternal/configtxgen/genesisconfig"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkinternal/configtxlator/update"
 	"github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkinternal/pkg/identity"
 	flogging "github.com/hyperledger/fabric-sdk-go/internal/github.com/hyperledger/fabric/sdkpatch/logbridge"
@@ -608,9 +608,10 @@ func New(config *genesisconfig.Profile) *Bootstrapper {
 	return bs
 }
 
-// GenesisBlock produces a genesis block for the default test chain id
+// GenesisBlock produces a genesis block for the default test channel id
 func (bs *Bootstrapper) GenesisBlock() *cb.Block {
-	return genesis.NewFactoryImpl(bs.channelGroup).Block(genesisconfig.TestChainID)
+	// TODO(mjs): remove
+	return genesis.NewFactoryImpl(bs.channelGroup).Block("testchannelid")
 }
 
 // GenesisBlockForChannel produces a genesis block for a given channel ID
