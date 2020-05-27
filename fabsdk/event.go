@@ -62,6 +62,7 @@ func callback(blockChain <-chan *pfab.BlockEvent, doProcess EventAdapter) {
 					// }
 
 				}
+				//UpdateBlockHeight
 			}
 
 		}
