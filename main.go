@@ -46,7 +46,7 @@ func main() {
 
 	fabric := fabsdk.NewFabricClient(fabConfig.ConfigFile, fabConfig.ChannelID, fabConfig.UserName, fabConfig.UserOrg)
 
-	err = fabric.Setup()
+	err = fabric.Setup(runDir)
 	if err != nil {
 		fmt.Println(err.Error())
 		return

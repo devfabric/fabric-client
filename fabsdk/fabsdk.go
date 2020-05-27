@@ -1,7 +1,11 @@
 package fabsdk
 
 import (
+	"encoding/json"
+	"errors"
+	"io/ioutil"
 	"os"
+	"path/filepath"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/event"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
@@ -43,7 +47,7 @@ func NewFabricClient(connectionFile string, channelId string, name string, orgs 
 	}
 }
 
-func (fab *FabricClient) Setup() error {
+func (fab *FabricClient) Setup(rootDir string) error {
 	var (
 		err                      error
 		org1ChannelClientContext contextApi.ChannelProvider
@@ -62,9 +66,17 @@ func (fab *FabricClient) Setup() error {
 	//重试
 	fab.retry = resmgmt.WithRetry(retry.DefaultResMgmtOpts)
 
-	org1ChannelClientContext = fab.sdk.ChannelContext(fab.ChannelID, fabsdk.WithUser(fab.DefaultName), fabsdk.WithOrg(fab.DefaultOrg))
+	blockNum, err := GetBlockHeight(rootDir)
+	if err != nil {
+		return err
+	}
 
-	fab.eventClient, err = event.New(org1ChannelClientContext, event.WithSeekType(seek.Newest))
+	org1ChannelClientContext = fab.sdk.ChannelContext(fab.ChannelID, fabsdk.WithUser(fab.DefaultName), fabsdk.WithOrg(fab.DefaultOrg))
+	evnetOpts, err := newEvnetOpts("from", blockNum)
+	if err != nil {
+		return err
+	}
+	fab.eventClient, err = event.New(org1ChannelClientContext, evnetOpts...)
 	if err != nil {
 		return err
 	}
@@ -78,4 +90,72 @@ func (fab *FabricClient) Close() {
 		}
 		fab.sdk.Close()
 	}
+}
+
+//写块高
+const BlockInfoFile = "./configs/blockInfo"
+
+type BlockInfo struct {
+	Height uint64 `json:"height"`
+}
+
+func GetBlockHeight(dir string) (uint64, error) {
+	blockInfoFile := filepath.Join(dir, BlockInfoFile)
+	_, err := os.Stat(blockInfoFile)
+	if err != nil {
+		var initHeight uint64
+		blockInfo := BlockInfo{Height: initHeight}
+		bytes, err := json.Marshal(&blockInfo)
+		if err != nil {
+			return 0, err
+		}
+		err = ioutil.WriteFile(blockInfoFile, bytes, os.ModePerm)
+		if err != nil {
+			return 0, err
+		}
+		return initHeight, nil
+	}
+
+	bytes, err := ioutil.ReadFile(blockInfoFile)
+	if err != nil {
+		return 0, err
+	}
+
+	blockInfo := BlockInfo{}
+	err = json.Unmarshal(bytes, &blockInfo)
+	if err != nil {
+		return 0, err
+	}
+
+	return blockInfo.Height, nil
+}
+
+func UpdateBlockHeight(dir string, height uint64) error {
+	blockInfo := BlockInfo{Height: height}
+	bytes, err := json.Marshal(&blockInfo)
+	if err != nil {
+		return err
+	}
+
+	blockInfoFile := filepath.Join(dir, BlockInfoFile)
+	err = ioutil.WriteFile(blockInfoFile, bytes, os.ModePerm)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func newEvnetOpts(seekType string, blockNum uint64) ([]event.ClientOption, error) {
+	if seekType != "oldest" && seekType != "newest" && seekType != "from" {
+		return nil, errors.New("seek type error,must be one of [oldest,newest,from]")
+	}
+
+	evnetOpts := []event.ClientOption{}
+	evnetOpts = append(evnetOpts, event.WithBlockEvents())
+	evnetOpts = append(evnetOpts, event.WithSeekType(seek.Type(seekType)))
+
+	if seekType == "from" {
+		evnetOpts = append(evnetOpts, event.WithBlockNum(blockNum))
+	}
+	return evnetOpts, nil
 }

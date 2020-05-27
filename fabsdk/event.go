@@ -1,6 +1,7 @@
 package fabsdk
 
 import (
+	"github.com/cloudflare/cfssl/log"
 	pfab "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 )
 
@@ -24,10 +25,45 @@ func (fab *FabricClient) RegisterBlockEvent(doProcess EventAdapter) error {
 func callback(blockChain <-chan *pfab.BlockEvent, doProcess EventAdapter) {
 	for {
 		select {
-		case event := <-blockChain:
-			_ = event
-			// processChan <- event
-			//UpdateBlockHeight
+		case cBlock := <-blockChain:
+			if cBlock != nil {
+				// enBlock := blockParse(cBlock.Block)
+				block, err := GetBlock(cBlock.Block)
+				if err != nil {
+					log.Error(err)
+					return
+				}
+
+				for _, tx := range block.Data {
+					if tx.ValidationCode != 0 {
+
+						continue
+					}
+					acs, ok := tx.Payload.(TransactionActions)
+					if !ok {
+						// log.Warn("is config tx skip")
+						continue
+					}
+					_ = acs
+					// for _, ac := range acs {
+					// 	_, ok := types.EventMap[ac.Events.EventName]
+					// 	if !ok {
+					// 		continue
+					// 	}
+
+					// 	cce := &fab.CCEvent{
+					// 		EventName:   ac.Events.EventName,
+					// 		Payload:     ac.Events.Payload,
+					// 		TxID:        ac.Events.TxId,
+					// 		BlockNumber: block.Height,
+					// 	}
+
+					// 	E.EventCh <- cce
+					// }
+
+				}
+			}
+
 		}
 	}
 }
