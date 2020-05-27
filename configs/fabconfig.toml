@@ -1,6 +1,0 @@
-UserName = "Admin"
-UserOrg = "Org1"
-MulOrgs = ["org1", "org2"]
-ChannelId = "mychannel"
-ConfigFile = "configs/first-network.yaml"
-ChaincodeId = "mycc"
