@@ -1,0 +1,5 @@
+UserName = "Admin"
+UserOrg = "Org1"
+ChannelID = "mychannel"
+ConfigFile = "first-network.yaml"
+ChaincodeID = "model"
