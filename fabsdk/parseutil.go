@@ -333,7 +333,6 @@ type FabricChannelConfig struct {
 }
 
 func parseChannelConfig(cfg fab.ChannelCfg) *FabricChannelConfig {
-
 	return &FabricChannelConfig{
 		Id:          cfg.ID(),
 		BlockNumber: cfg.BlockNumber(),

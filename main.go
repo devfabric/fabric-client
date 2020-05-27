@@ -108,4 +108,10 @@ func main() {
 	// 	return
 	// }
 	// fmt.Println(channelInfo)
+
+	_, _, err = fabric.RegisterUser("liuhy")
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 }

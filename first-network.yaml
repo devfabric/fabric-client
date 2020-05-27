@@ -241,7 +241,23 @@ peers:
       # Certificate location absolute path
       path: ./crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
 
- 
+certificateAuthorities:
+  ca.org1.example.com:
+    url: http://ca.org1.example.com:7054 #写如/etc/hosts域名中
+    grpcOptions:
+      ssl-target-name-override: ca.org1.example.com
+    tlsCACerts:
+      path: ./crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+      client:
+        key:
+          path: ./crypto-config/peerOrganizations/org1.example.com/tlsca/b04e21a1f4a14c8ece2d2d83deaef5892f53b57f431d6a6e7d7d64375b282661_sk
+        cert:
+          path: ./crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+    registrar:
+        enrollId: root
+        enrollSecret: adminpw
+    caName: ca-org1
+
 entityMatchers:
   peer:
     - pattern: (\w*)peer0.org1.example.com(\w*)
