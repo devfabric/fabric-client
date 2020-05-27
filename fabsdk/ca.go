@@ -3,20 +3,11 @@ package fabsdk
 import (
 	"fmt"
 
-	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
-	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"
-
-	// "github.com/hyperledger/fabric-sdk-go/pkg/fab/ccpackager/gopackager"
-	// "github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/common/cauthdsl"
-	// "github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
-	// "github.com/hyperledger/fabric-sdk-go/pkg/client/channel"
-	// "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
-	// "fmt"
-	// "time"
-	// cfg "github.com/jonluo94/cool/config"
-	// "github.com/jonluo94/cool/log"
 	"encoding/hex"
 	"strings"
+
+	mspclient "github.com/hyperledger/fabric-sdk-go/pkg/client/msp"
+	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/msp"
 )
 
 func (f *FabricClient) GetKeyFile(id msp.SigningIdentity) (string, string) {
