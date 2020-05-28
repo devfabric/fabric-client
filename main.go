@@ -80,19 +80,19 @@ func main() {
 	}
 	fmt.Println(string(payLoad))
 
-	// payLoad, err = fabric.InvokeChaincodeWithEvent(fabConfig.ChaincodeID, "User1", "reg_org", nil)
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// 	return
-	// }
-	// fmt.Println(string(payLoad))
-
-	payLoad, err = fabric.InvokeChaincode(fabConfig.ChaincodeID, "User1", "reg_org", [][]byte{[]byte("ss")})
+	payLoad, err = fabric.InvokeChaincodeWithEvent(fabConfig.ChaincodeID, "User1", "reg_org", [][]byte{[]byte("ss")})
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 	fmt.Println(string(payLoad))
+
+	// payLoad, err = fabric.InvokeChaincode(fabConfig.ChaincodeID, "User1", "reg_org", [][]byte{[]byte("ss")})
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// 	return
+	// }
+	// fmt.Println(string(payLoad))
 	//90d3ea7c062cc5b9ad82a991ef15ac0de238a1b45ae5dd8e5eb8127178fa6bde
 
 	// tx, err := fabric.QueryTransaction("90d3ea7c062cc5b9ad82a991ef15ac0de238a1b45ae5dd8e5eb8127178fa6bde")

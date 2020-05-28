@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/event"
+	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/resmgmt"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 	contextApi "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
@@ -34,9 +35,12 @@ type FabricClient struct {
 	sdk            *fabsdk.FabricSDK
 	resmgmtClients []*resmgmt.Client
 	retry          resmgmt.RequestOption
-	eventClient    *event.Client
-	listenEvent    ListenBlock
-	isExit         chan struct{}
+
+	ledgerClient *ledger.Client //获取最新区块信息客户端
+
+	eventClient *event.Client //事件监听客户端
+	listenEvent ListenBlock
+	isExit      chan struct{}
 }
 
 func NewFabricClient(connectionFile string, channelId string, name string, orgs string) *FabricClient {
@@ -68,23 +72,33 @@ func (fab *FabricClient) Setup(rootDir string) error {
 	//重试
 	fab.retry = resmgmt.WithRetry(retry.DefaultResMgmtOpts)
 
-	blockNum, err := GetBlockHeight(rootDir)
-	if err != nil {
-		return err
+	//block
+	{
+		fab.ledgerClient, err = ledger.New(fab.sdk.ChannelContext(fab.ChannelID, fabsdk.WithUser(fab.DefaultName), fabsdk.WithOrg(fab.DefaultOrg)))
+		if err != nil {
+			return err
+		}
 	}
 
-	org1ChannelClientContext = fab.sdk.ChannelContext(fab.ChannelID, fabsdk.WithUser(fab.DefaultName), fabsdk.WithOrg(fab.DefaultOrg))
-	evnetOpts, err := newEvnetOpts("from", blockNum)
-	if err != nil {
-		return err
-	}
+	//event
+	{
+		blockNum, err := GetBlockHeight(rootDir)
+		if err != nil {
+			return err
+		}
 
-	fab.eventClient, err = event.New(org1ChannelClientContext, evnetOpts...)
-	if err != nil {
-		return err
-	}
+		org1ChannelClientContext = fab.sdk.ChannelContext(fab.ChannelID, fabsdk.WithUser(fab.DefaultName), fabsdk.WithOrg(fab.DefaultOrg))
+		evnetOpts, err := newEvnetOpts("from", blockNum)
+		if err != nil {
+			return err
+		}
+		fab.eventClient, err = event.New(org1ChannelClientContext, evnetOpts...)
+		if err != nil {
+			return err
+		}
+		fab.listenEvent = ListenBlock{}
 
-	fab.listenEvent = ListenBlock{}
+	}
 	fab.isExit = make(chan struct{})
 	return nil
 }

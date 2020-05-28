@@ -6,8 +6,8 @@ import (
 	pfab "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 )
 
-type EventTxAdapter func(blockHeight uint64, txEv *Event) error
-type EventBlockAdapter func(blockInfo *Block) error
+type EventTxAdapter func(blockHeight uint64, txEv *Event) error //监听最新区块和区块内交易
+type EventBlockAdapter func(blockInfo *Block) error             //监听最新区块
 
 func (fab *FabricClient) RegisterBlockEvent(notifyBlockEv EventBlockAdapter, notifyTxEv EventTxAdapter) error {
 	var (

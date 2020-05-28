@@ -24,6 +24,7 @@ type TxEvent struct {
 	Payload     []byte
 }
 
+//建议采用最新获取区块信息接口
 func fastParseBlock(block *cm.Block) ([]*TxEvent, error) {
 	var (
 		tranNo   int64 = -1
