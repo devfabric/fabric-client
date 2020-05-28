@@ -39,6 +39,20 @@ func (fab *FabricClient) QueryBlock(height uint64) (*FabricBlock, error) {
 	return bs, nil
 }
 
+func (fab *FabricClient) GetEventFromBlock(height uint64) ([]*TxEvent, error) {
+	ledger, err := ledger.New(fab.sdk.ChannelContext(fab.ChannelID, fabsdk.WithUser(fab.DefaultName), fabsdk.WithOrg(fab.DefaultOrg)))
+	if err != nil {
+		return nil, err
+	}
+
+	block, err := ledger.QueryBlock(height)
+	if err != nil {
+		return nil, err
+	}
+
+	return fastParseBlock(block)
+}
+
 func (fab *FabricClient) QueryBlockByHash(hash string) (*FabricBlock, error) {
 	ledger, err := ledger.New(fab.sdk.ChannelContext(fab.ChannelID, fabsdk.WithUser(fab.DefaultName), fabsdk.WithOrg(fab.DefaultOrg)))
 	if err != nil {

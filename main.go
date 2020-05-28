@@ -109,9 +109,19 @@ func main() {
 	// }
 	// fmt.Println(channelInfo)
 
-	_, _, err = fabric.RegisterUser("liuhy")
+	// _, _, err = fabric.RegisterUser("liuhy")
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// 	return
+	// }
+
+	events, err := fabric.GetEventFromBlock(28)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
+	}
+	for i, v := range events {
+		fmt.Println(i, v)
+		fmt.Println(i, string(v.Payload))
 	}
 }

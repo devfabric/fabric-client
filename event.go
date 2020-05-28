@@ -66,6 +66,16 @@ func doEventBlockProcess(blockInfo *fabsdk.Block) error {
 	fmt.Println(blockInfo.Height)
 	fmt.Println(blockInfo.DataHash)
 	fmt.Println(blockInfo.PreviousHash)
+
+	// events, err := fabric.GetEventFromBlock(28)
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// 	return
+	// }
+	// for i, v := range events {
+	// 	fmt.Println(i, v)
+	// 	fmt.Println(i, string(v.Payload))
+	// }
 	return nil
 }
 
