@@ -39,7 +39,6 @@ func (f *FabricClient) CreateChannel(channelTx string) error {
 }
 
 func (f *FabricClient) UpdateChannel(anchorsTx []string) error {
-
 	for i, c := range f.resmgmtClients {
 
 		mspClient, err := mspclient.New(f.sdk.Context(), mspclient.WithOrg(f.DefaultOrg))
@@ -69,7 +68,6 @@ func (f *FabricClient) UpdateChannel(anchorsTx []string) error {
 }
 
 func (f *FabricClient) JoinChannel() error {
-
 	for _, c := range f.resmgmtClients {
 		err := c.JoinChannel(f.ChannelID, f.retry)
 		if err != nil && !strings.Contains(err.Error(), "LedgerID already exists") {
@@ -78,7 +76,6 @@ func (f *FabricClient) JoinChannel() error {
 
 	}
 	return nil
-
 }
 
 func (f *FabricClient) InstallChaincode(chaincodeId, chaincodePath, version string) error {
@@ -108,7 +105,6 @@ func (f *FabricClient) InstallChaincode(chaincodeId, chaincodePath, version stri
 }
 
 func (f *FabricClient) InstantiateChaincode(chaincodeId, chaincodePath, version string, policy string, args [][]byte) (string, error) {
-
 	//"OR ('Org1MSP.member','Org2MSP.member')"
 	ccPolicy, err := cauthdsl.FromString(policy)
 	if err != nil {
@@ -131,7 +127,6 @@ func (f *FabricClient) InstantiateChaincode(chaincodeId, chaincodePath, version 
 }
 
 func (f *FabricClient) UpgradeChaincode(chaincodeId, chaincodePath, version string, policy string, args [][]byte) (string, error) {
-
 	f.InstallChaincode(chaincodeId, chaincodePath, version)
 
 	ccPolicy, err := cauthdsl.FromString(policy)

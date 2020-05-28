@@ -286,6 +286,7 @@ github.com/hyperledger/fabric-sdk-go/pkg/util/test
 github.com/hyperledger/fabric-sdk-go/test/metadata
 # github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric v0.0.0-20190411180201-5a9a0e749e4f
 github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/common/cauthdsl
+github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/core/ledger/util
 github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/internal/protoutil
 github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/common
 github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/discovery

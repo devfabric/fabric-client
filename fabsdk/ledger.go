@@ -6,11 +6,6 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/client/ledger"
 	pfab "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
-	// cm "github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/common"
-	// "github.com/hyperledger/fabric-protos-go/common"
-	// cm "github.com/hyperledger/fabric/protos/common"
-	// "github.com/hyperledger/fabric/protos/common"
-	// cfg "github.com/jonluo94/cool/config"
 )
 
 func (fab *FabricClient) QueryLedger() (*FabricBlockchainInfo, error) {

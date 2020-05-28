@@ -1,70 +1,71 @@
 package fabsdk
 
 import (
-	"github.com/cloudflare/cfssl/log"
+	"fmt"
+
 	pfab "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 )
 
-type EventAdapter func(cbName string, payload []byte) error
+type EventTxAdapter func(blockHeight uint64, txEv *Event) error
+type EventBlockAdapter func(blockInfo *Block) error
 
-func (fab *FabricClient) RegisterBlockEvent(doProcess EventAdapter) error {
+func (fab *FabricClient) RegisterBlockEvent(notifyBlockEv EventBlockAdapter, notifyTxEv EventTxAdapter) error {
 	var (
-		err        error
-		blockChain <-chan *pfab.BlockEvent
+		err error
 	)
 
-	fab.registration, blockChain, err = fab.eventClient.RegisterBlockEvent()
+	fab.listenEvent.registration, fab.listenEvent.blockChain, err = fab.eventClient.RegisterBlockEvent()
 	if err != nil {
 		return err
 	}
 
-	go callback(blockChain, doProcess)
+	go callback(fab.listenEvent.blockChain, fab.isExit, notifyBlockEv, notifyTxEv)
 	return nil
 }
 
-func callback(blockChain <-chan *pfab.BlockEvent, doProcess EventAdapter) {
+func callback(blockChain <-chan *pfab.BlockEvent, isExit chan struct{}, notifyBlockEvent EventBlockAdapter, notifyTxEvent EventTxAdapter) {
 	for {
 		select {
 		case cBlock := <-blockChain:
 			if cBlock != nil {
-				// enBlock := blockParse(cBlock.Block)
 				block, err := GetBlock(cBlock.Block)
 				if err != nil {
-					log.Error(err)
-					return
+					fmt.Println("GetBlock", err)
+					continue
 				}
 
+				if notifyBlockEvent != nil {
+					err = notifyBlockEvent(block)
+					if err != nil {
+						fmt.Println("notifyBlockEvent", err)
+					}
+				}
 				for _, tx := range block.Data {
 					if tx.ValidationCode != 0 {
-
 						continue
 					}
-					acs, ok := tx.Payload.(TransactionActions)
+					txActions, ok := tx.Payload.(TransactionActions)
 					if !ok {
 						// log.Warn("is config tx skip")
 						continue
 					}
-					_ = acs
-					// for _, ac := range acs {
-					// 	_, ok := types.EventMap[ac.Events.EventName]
-					// 	if !ok {
-					// 		continue
-					// 	}
-
-					// 	cce := &fab.CCEvent{
-					// 		EventName:   ac.Events.EventName,
-					// 		Payload:     ac.Events.Payload,
-					// 		TxID:        ac.Events.TxId,
-					// 		BlockNumber: block.Height,
-					// 	}
-
-					// 	E.EventCh <- cce
-					// }
-
+					for _, txAc := range txActions {
+						if notifyTxEvent != nil {
+							err = notifyTxEvent(block.Height, &txAc.Events)
+							if err != nil {
+								fmt.Println("notifyTxEvent", err)
+							}
+						}
+					}
 				}
-				//UpdateBlockHeight
-			}
 
+				err = UpdateBlockHeight("./", block.Height)
+				if err != nil {
+					fmt.Println("UpdateBlockHeight", err)
+				}
+			}
+		case <-isExit:
+			return
 		}
 	}
 }

@@ -12,15 +12,16 @@ import (
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/errors/retry"
 	contextApi "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/context"
 	"github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
+	pfab "github.com/hyperledger/fabric-sdk-go/pkg/common/providers/fab"
 	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fab/events/deliverclient/seek"
 	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
-	// cm "github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric/protos/common"
-	// "github.com/hyperledger/fabric-protos-go/common"
-	// cm "github.com/hyperledger/fabric/protos/common"
-	// "github.com/hyperledger/fabric/protos/common"
-	// cfg "github.com/jonluo94/cool/config"
 )
+
+type ListenBlock struct {
+	registration fab.Registration
+	blockChain   <-chan *pfab.BlockEvent
+}
 
 type FabricClient struct {
 	ConnectionFile string
@@ -34,7 +35,8 @@ type FabricClient struct {
 	resmgmtClients []*resmgmt.Client
 	retry          resmgmt.RequestOption
 	eventClient    *event.Client
-	registration   fab.Registration
+	listenEvent    ListenBlock
+	isExit         chan struct{}
 }
 
 func NewFabricClient(connectionFile string, channelId string, name string, orgs string) *FabricClient {
@@ -76,18 +78,27 @@ func (fab *FabricClient) Setup(rootDir string) error {
 	if err != nil {
 		return err
 	}
+
 	fab.eventClient, err = event.New(org1ChannelClientContext, evnetOpts...)
 	if err != nil {
 		return err
 	}
+
+	fab.listenEvent = ListenBlock{}
+	fab.isExit = make(chan struct{})
 	return nil
 }
 
 func (fab *FabricClient) Close() {
+	if fab.isExit != nil {
+		close(fab.isExit)
+	}
+
+	if fab.listenEvent.registration != nil {
+		fab.eventClient.Unregister(fab.listenEvent.registration)
+	}
+
 	if fab.sdk != nil {
-		if fab.registration != nil {
-			fab.eventClient.Unregister(fab.registration)
-		}
 		fab.sdk.Close()
 	}
 }
