@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"fabric-client/config"
-	"fabric-client/fabsdk"
+	"github.com/devfabric/fabric-client/config"
+	"github.com/devfabric/fabric-client/fabsdk"
 	"os"
 	"path/filepath"
 	"strings"

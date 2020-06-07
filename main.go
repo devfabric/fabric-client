@@ -3,11 +3,12 @@ package main
 import (
 	"fmt"
 
-	"fabric-client/config"
-	"fabric-client/fabsdk"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/devfabric/fabric-client/config"
+	"github.com/devfabric/fabric-client/fabsdk"
 )
 
 func GetCurrentDirectory() (string, error) {
