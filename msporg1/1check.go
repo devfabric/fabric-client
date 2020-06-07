@@ -33,7 +33,7 @@ func main() {
 	}
 	fmt.Println("runDir=", runDir)
 
-	fabConfig, err := config.LoadHPCacheConfig(runDir)
+	fabConfig, err := config.LoadFabircConfig(runDir)
 	if err != nil {
 		fmt.Println(err.Error())
 		return

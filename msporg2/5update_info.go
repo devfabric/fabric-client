@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/devfabric/fabric-client/config"
-	"github.com/devfabric/fabric-client/fabsdk"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/devfabric/fabric-client/config"
+	"github.com/devfabric/fabric-client/fabsdk"
 )
 
 func GetCurrentDirectory() (string, error) {
@@ -32,7 +33,7 @@ func main() {
 		os.Setenv("WORKDIR", runDir)
 	}
 
-	fabConfig, err := config.LoadHPCacheConfig(runDir)
+	fabConfig, err := config.LoadFabircConfig(runDir)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
