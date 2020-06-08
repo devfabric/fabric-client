@@ -43,3 +43,8 @@ type QueryCond struct {
 	Limit int32           `json:"limit"`
 	Skip  int32           `json:"skip"`
 }
+
+type SimpleCond struct {
+	Limit int32 `json:"limit"`
+	Skip  int32 `json:"skip"`
+}

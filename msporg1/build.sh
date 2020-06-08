@@ -6,8 +6,8 @@ go build -o 4put_info 4put_info.go type.go
 go build -o 5update_info 5update_info.go type.go
 go build -o 6get_info 6get_info.go type.go
 go build -o 7query_bycond 7query_bycond.go type.go
-go build -o 8get_history 8get_history.go type.go
-
+go build -o 8query_simple 8query_simple.go type.go
+go build -o 9get_history 9get_history.go type.go
 
 
 
