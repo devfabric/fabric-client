@@ -39,6 +39,12 @@ func main() {
 		return
 	}
 
+	// connectConfig, err := ioutil.ReadFile(fabConfig.ConfigFile)
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// 	return
+	// }
+
 	fabric := fabsdk.NewFabricClient(fabConfig.ConfigFile, fabConfig.ChannelID, fabConfig.UserName, fabConfig.UserOrg)
 	err = fabric.Setup(runDir)
 	if err != nil {
@@ -46,37 +52,59 @@ func main() {
 		return
 	}
 
-	updateData := make([]*UpdateBaseInfo, 0)
-	updateData1 := &UpdateBaseInfo{
-		UserName: "user1",
+	putFavorList := make([]*PutFavor, 0)
+	putItem1 := &PutFavor{
 		CardType: 1,
-		CardID:   "user1-100001",
-		CardIDMap: map[uint8]string{
-			4: "user1-100004",
+		CardID:   "身份证S1000",
+		IndemCard: &IndemCard{
+			FieldKVMap: map[string]interface{}{
+				"社保账号": "身份证S1000",
+				"民生卡号": "M1000",
+				"卡状态":  1,
+			},
 		},
-		FieldKVMap: map[string]interface{}{
-			"sex":   "女",
-			"card4": "user1-100004",
+		BankCard: &BankCard{
+			FieldKVMap: map[string]interface{}{
+				"银行卡号": "Y1000",
+				"发卡银行": "工商银行",
+			},
+		},
+		AssetsInfo: &AssetsInfo{
+			FieldKVMap: map[string]interface{}{
+				"社保身份": 0,
+				"残疾级别": 1,
+			},
 		},
 	}
 
-	updateData2 := &UpdateBaseInfo{
-		UserName: "user2",
+	putItem2 := &PutFavor{
 		CardType: 1,
-		CardID:   "user2-200001",
-		FieldKVMap: map[string]interface{}{
-			"name":  "user2",
-			"sex":   "女",
-			"card1": "user2-200001",
-			"card2": "user2-200002",
-			"card3": "user2-200003",
+		CardID:   "身份证S2000",
+		IndemCard: &IndemCard{
+			FieldKVMap: map[string]interface{}{
+				"社保账号": "身份证S2000",
+				"民生卡号": "M2000",
+				"卡状态":  1,
+			},
+		},
+		BankCard: &BankCard{
+			FieldKVMap: map[string]interface{}{
+				"银行卡号": "Y2000",
+				"发卡银行": "北京银行",
+			},
+		},
+		AssetsInfo: &AssetsInfo{
+			FieldKVMap: map[string]interface{}{
+				"社保身份": 0,
+				"残疾级别": 0,
+			},
 		},
 	}
 
-	updateData = append(updateData, updateData1)
-	updateData = append(updateData, updateData2)
+	putFavorList = append(putFavorList, putItem1)
+	putFavorList = append(putFavorList, putItem2)
 
-	arrayList, err := json.Marshal(updateData)
+	arrayList, err := json.Marshal(putFavorList)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
@@ -84,7 +112,7 @@ func main() {
 
 	//printf
 	{
-		arrayList1, err := json.MarshalIndent(updateData, "", " ")
+		arrayList1, err := json.MarshalIndent(putFavorList, "", " ")
 		if err != nil {
 			fmt.Println(err.Error())
 			return
@@ -106,7 +134,7 @@ func main() {
 	// 	}
 	// }
 
-	payLoad, err := fabric.InvokeChaincodeWithEvent(fabConfig.ChaincodeID, "User1", "update_baseinfo", [][]byte{arrayList, []byte(EvUpdateBaseInfo)})
+	payLoad, err := fabric.InvokeChaincodeWithEvent(fabConfig.ChaincodeID, "User1", "put_favorinfo", [][]byte{arrayList, []byte(EvPutFavorInfo)})
 	if err != nil {
 		fmt.Println(err.Error())
 		return

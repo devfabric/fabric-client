@@ -31,7 +31,6 @@ func main() {
 	if workDirForFabSDK == "" {
 		os.Setenv("WORKDIR", runDir)
 	}
-	fmt.Println("runDir=", runDir)
 
 	fabConfig, err := config.LoadFabircConfig(runDir)
 	if err != nil {
@@ -39,42 +38,14 @@ func main() {
 		return
 	}
 
-	// connectConfig, err := ioutil.ReadFile(fabConfig.ConfigFile)
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// 	return
-	// }
-
 	fabric := fabsdk.NewFabricClient(fabConfig.ConfigFile, fabConfig.ChannelID, fabConfig.UserName, fabConfig.UserOrg)
-
 	err = fabric.Setup(runDir)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 
-	blockInfo, err := fabric.QueryLedger()
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	fmt.Println(blockInfo)
-
-	// binfo, err := fabric.QueryBlock(2)
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// 	return
-	// }
-	// fmt.Println(binfo)
-
-	// binfo, err := fabric.QueryBlockByHash("3eba885e44edfe4293797ffeef568d777ab052793941f875d2a6d8000d51ca40")
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// 	return
-	// }
-	// fmt.Println(binfo)
-
-	payLoad, err := fabric.QueryChaincode(fabConfig.ChaincodeID, "User1", "check", nil)
+	payLoad, err := fabric.InvokeChaincodeWithEvent(fabConfig.ChaincodeID, "User1", "register_org", [][]byte{[]byte("人社局"), []byte(EvRegisterOrg)})
 	if err != nil {
 		fmt.Println(err.Error())
 		return

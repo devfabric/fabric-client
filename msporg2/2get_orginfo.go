@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"os"
@@ -54,33 +53,17 @@ func main() {
 		return
 	}
 
-	getInfo := &GetInfo{
-		UserName: "user1",
-		CardType: 1,
-		CardID:   "user1-100001",
-	}
-
-	getInfoBys, err := json.Marshal(getInfo)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-
-	//printf
-	{
-		arrayList1, err := json.MarshalIndent(getInfo, "", " ")
-		if err != nil {
-			fmt.Println(err.Error())
-			return
-		}
-		fmt.Println(string(arrayList1))
-	}
-
-	payLoad, err := fabric.QueryChaincode(fabConfig.ChaincodeID, "User1", "get_history", [][]byte{getInfoBys})
+	payLoad, err := fabric.QueryChaincode(fabConfig.ChaincodeID, "User1", "get_orginfo", [][]byte{[]byte("self")})
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 	fmt.Println(string(payLoad))
 
+	payLoad, err = fabric.QueryChaincode(fabConfig.ChaincodeID, "User1", "get_orginfo", [][]byte{nil})
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Println(string(payLoad))
 }
