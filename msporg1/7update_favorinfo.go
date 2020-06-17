@@ -55,22 +55,20 @@ func main() {
 	putFavorList := make([]*UpdateFavor, 0)
 	putItem1 := &PutFavor{
 		CardType: 1,
-		CardID:   "身份证S1000",
+		CardID:   "身份证S3000",
 		AssetsInfo: &AssetsInfo{
 			FieldKVMap: map[string]interface{}{
-				"社保身份": 0,
-				"残疾级别": 0,
+				"社保身份": 1,
 			},
 		},
 	}
 
 	putItem2 := &PutFavor{
 		CardType: 1,
-		CardID:   "身份证S2000",
+		CardID:   "身份证S4000",
 		AssetsInfo: &AssetsInfo{
 			FieldKVMap: map[string]interface{}{
-				"社保身份": 0,
-				"残疾级别": 1,
+				"社保身份": 1,
 			},
 		},
 	}

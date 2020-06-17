@@ -65,7 +65,7 @@ client:
 
   # Root of the MSP directories with keys and certs.
   cryptoconfig:
-    path: ./crypto-config
+    path: ./configs/crypto-config
 
   # Some SDKs support pluggable KV stores, the properties under "credentialStore"
   # are implementation specific
@@ -214,7 +214,7 @@ orderers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ./crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+      path: ./configs/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
 
 #
 # List of peers to send various requests to, including endorsement, query
@@ -239,7 +239,7 @@ peers:
 
     tlsCACerts:
       # Certificate location absolute path
-      path: ./crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+      path: ./configs/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
 
 certificateAuthorities:
   ca.org1.example.com:
@@ -247,12 +247,12 @@ certificateAuthorities:
     grpcOptions:
       ssl-target-name-override: ca.org1.example.com
     tlsCACerts:
-      path: ./crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+      path: ./configs/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
       client:
         key:
-          path: ./crypto-config/peerOrganizations/org1.example.com/tlsca/991b0454e4e527aee8505103aa20f580adb99ca35288af6aab710c1e7be60a8f_sk
+          path: ./configs/crypto-config/peerOrganizations/org1.example.com/tlsca/991b0454e4e527aee8505103aa20f580adb99ca35288af6aab710c1e7be60a8f_sk
         cert:
-          path: ./crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+          path: ./configs/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
     registrar:
         enrollId: root
         enrollSecret: adminpw

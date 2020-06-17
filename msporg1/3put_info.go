@@ -71,7 +71,6 @@ func main() {
 		AssetsInfo: &AssetsInfo{
 			FieldKVMap: map[string]interface{}{
 				"社保身份": 0,
-				"残疾级别": 1,
 			},
 		},
 	}
@@ -100,7 +99,6 @@ func main() {
 		AssetsInfo: &AssetsInfo{
 			FieldKVMap: map[string]interface{}{
 				"社保身份": 0,
-				"残疾级别": 0,
 			},
 		},
 	}

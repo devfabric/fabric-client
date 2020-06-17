@@ -49,9 +49,9 @@ func main() {
 	updateBaseList := make([]*UpdateBaseInfo, 0)
 	updateItem1 := &UpdateBaseInfo{
 		CardType: 1,
-		CardID:   "身份证S1000",
+		CardID:   "身份证S3000",
 		CardIDMap: map[uint8]string{
-			4: "国家统一号码G1000",
+			4: "国家统一号码G3000",
 		},
 		PersonInfo: PersonInfo{
 			FieldKVMap: map[string]interface{}{
@@ -63,14 +63,14 @@ func main() {
 
 	updateItem2 := &UpdateBaseInfo{
 		CardType: 1,
-		CardID:   "身份证S2000",
+		CardID:   "身份证S4000",
 		CardIDMap: map[uint8]string{
-			4: "国家统一号码G2000",
+			4: "国家统一号码G4000",
 		},
 		PersonInfo: PersonInfo{
 			FieldKVMap: map[string]interface{}{
 				"职业":     "医生",
-				"国家统一号码": "国家统一号码G2000",
+				"国家统一号码": "国家统一号码G4000",
 			},
 		},
 	}

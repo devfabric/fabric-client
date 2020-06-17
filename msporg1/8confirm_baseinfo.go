@@ -55,13 +55,9 @@ func main() {
 	updateItem2 := &UpdateBaseInfo{
 		CardType: 1,
 		CardID:   "身份证S2000",
-		CardIDMap: map[uint8]string{
-			1: "身份证S20000",
-		},
 		PersonInfo: PersonInfo{
 			FieldKVMap: map[string]interface{}{
-				"职业":  "医生X",
-				"身份证": "身份证S20000X",
+				"职业": "医生",
 			},
 		},
 	}
