@@ -250,7 +250,7 @@ certificateAuthorities:
       path: ./configs/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
       client:
         key:
-          path: ./configs/crypto-config/peerOrganizations/org1.example.com/tlsca/54a91891618a7773a7457ea8acf463e2f876094441bcfa78d190cb9b51cedaee_sk
+          path: ./configs/crypto-config/peerOrganizations/org1.example.com/tlsca/991b0454e4e527aee8505103aa20f580adb99ca35288af6aab710c1e7be60a8f_sk
         cert:
           path: ./configs/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
     registrar:

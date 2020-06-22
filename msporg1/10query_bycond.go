@@ -55,9 +55,9 @@ func main() {
 	}
 
 	queryCond := &QueryCond{
-		// Field: map[string]bool{
-		// 	"name": true,
-		// },
+		Field: map[string]bool{
+			"姓名": true,
+		},
 
 		Skip:  1,
 		Limit: 100,

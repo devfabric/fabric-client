@@ -57,15 +57,15 @@ func main() {
 	getInfoList := make([]*GetInfo, 0)
 	getInfo1 := &GetInfo{
 		CardType: 1,
-		CardID:   "身份证S1000",
+		CardID:   "身份证S3000",
 	}
-	getInfo2 := &GetInfo{
-		CardType: 1,
-		CardID:   "身份证S2000",
-	}
+	// getInfo2 := &GetInfo{
+	// 	CardType: 1,
+	// 	CardID:   "身份证S2000",
+	// }
 
 	getInfoList = append(getInfoList, getInfo1)
-	getInfoList = append(getInfoList, getInfo2)
+	// getInfoList = append(getInfoList, getInfo2)
 
 	arrayList, err := json.Marshal(getInfoList)
 	if err != nil {

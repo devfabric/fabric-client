@@ -72,9 +72,19 @@ func main() {
 			},
 		},
 	}
-
 	putFavorList = append(putFavorList, putItem1)
 	putFavorList = append(putFavorList, putItem2)
+
+	// putItem1 := &PutFavor{
+	// 	CardType: 1,
+	// 	CardID:   "身份证S1000",
+	// 	BankCard: &BankCard{
+	// 		FieldKVMap: map[string]interface{}{
+	// 			"平安银行": 1000,
+	// 		},
+	// 	},
+	// }
+	// putFavorList = append(putFavorList, putItem1)
 
 	arrayList, err := json.Marshal(putFavorList)
 	if err != nil {
