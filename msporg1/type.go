@@ -3,6 +3,10 @@ package main
 //个人基本信息
 type PersonInfo struct {
 	FieldKVMap map[string]interface{} `json:"fields"`
+	ShareKVMap map[string]struct {
+		Value interface{} `json:"value"`
+		MspID string      `json:"mspid"`
+	} `json:"shareds，omitempty"` //共享数据区域
 }
 
 //社保卡信息
@@ -48,6 +52,13 @@ type PutFavor struct {
 
 type UpdateFavor = PutFavor
 
+//新增共享数据区
+type PutSharedKV struct {
+	CardType   uint8                  `json:"cardtype"`
+	CardID     string                 `json:"cardid"`
+	FieldKVMap map[string]interface{} `json:"fields"`
+}
+
 type GetInfo struct {
 	CardType uint8  `json:"cardtype"`
 	CardID   string `json:"cardid"`
@@ -78,6 +89,7 @@ const (
 	EvPutFavorInfo    string = "EvPutFavorInfo"
 	EvUpdateFavorInfo string = "EvUpdateFavorInfo"
 	EvConfirmBaseInfo string = "EvConfirmBaseInfo"
+	EvPutSharedArea   string = "EvPutSharedArea"
 	// confirm_baseinfo
 	// EvUpdateInfo string = "EvUpdateInfo"
 )

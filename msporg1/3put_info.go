@@ -67,6 +67,17 @@ func main() {
 				"工作地址":  "北京市海淀区XXXX",
 				"联系电话":  "185XXXXXX",
 			},
+			ShareKVMap: map[string]struct {
+				Value interface{} `json:"value"`
+				MspID string      `json:"mspid"`
+			}{
+				"isdelete": struct {
+					Value interface{} `json:"value"`
+					MspID string      `json:"mspid"`
+				}{
+					Value: 0,
+				},
+			},
 		},
 		AssetsInfo: &AssetsInfo{
 			FieldKVMap: map[string]interface{}{
@@ -94,6 +105,17 @@ func main() {
 				"户口所在地": "北京市朝阳区XXX",
 				"工作地址":  "北京市海淀区XXXX",
 				"联系电话":  "156XXXXXX",
+			},
+			ShareKVMap: map[string]struct {
+				Value interface{} `json:"value"`
+				MspID string      `json:"mspid"`
+			}{
+				"isdelete": struct {
+					Value interface{} `json:"value"`
+					MspID string      `json:"mspid"`
+				}{
+					Value: 0,
+				},
 			},
 		},
 		AssetsInfo: &AssetsInfo{

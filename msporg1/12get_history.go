@@ -56,7 +56,7 @@ func main() {
 
 	getInfo := &GetInfo{
 		CardType: 1,
-		CardID:   "身份证S1000",
+		CardID:   "身份证S3000",
 	}
 
 	getInfoBys, err := json.Marshal(getInfo)
