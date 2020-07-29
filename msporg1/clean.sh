@@ -12,5 +12,4 @@ rm -rf 10query_bycond
 rm -rf 11query_simple
 rm -rf 12get_history
 
-rm -rf 19put_sharedarea
-rm -rf 20update_sharedarea
+rm -rf 19set_sharedkv

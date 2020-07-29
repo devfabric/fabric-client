@@ -1,0 +1,5 @@
+UserName = "Admin"
+UserOrg = "Org1"
+ChannelID = "mychannel"
+ConfigFile = "configs/first-network.yaml"
+ChaincodeID = "trust"
