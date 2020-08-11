@@ -56,10 +56,11 @@ func main() {
 
 	getInfoList := make([]*GetInfo, 0)
 	getInfo1 := &GetInfo{
-		SeqNum: "BN1000",
+		PackID: "BN1000",
 	}
 	getInfo2 := &GetInfo{
-		SeqNum: "BN2000",
+		PackID: "BN2000",
+		CardID: "300XXXX",
 	}
 
 	getInfoList = append(getInfoList, getInfo1)

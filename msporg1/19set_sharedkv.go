@@ -102,7 +102,7 @@ func main() {
 	// 	}
 	// }
 
-	payLoad, err := fabric.InvokeChaincodeWithEvent(fabConfig.ChaincodeID, "User1", "set_sharedkv	", [][]byte{arrayList, []byte(EvPutSharedArea)})
+	payLoad, err := fabric.InvokeChaincodeWithEvent(fabConfig.ChaincodeID, "User1", "set_sharedkv", [][]byte{arrayList, []byte(EvPutSharedArea)})
 	if err != nil {
 		fmt.Println(err.Error())
 		return

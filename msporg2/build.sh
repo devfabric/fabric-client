@@ -12,6 +12,8 @@ go build -o 10query_bycond 10query_bycond.go type.go
 go build -o 11query_simple 11query_simple.go type.go
 go build -o 12get_history 12get_history.go type.go
 
+go build -o 19set_sharedkv 19set_sharedkv.go type.go
+
 
 
 

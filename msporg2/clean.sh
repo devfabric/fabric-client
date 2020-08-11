@@ -10,6 +10,6 @@ rm -rf 8confirm_baseinfo
 rm -rf 9get_info 
 rm -rf 10query_bycond 
 rm -rf 11query_simple
-rm -rf 12get_history 
+rm -rf 12get_history
 
-
+rm -rf 19set_sharedkv

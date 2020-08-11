@@ -55,48 +55,46 @@ func main() {
 	putFavorList := make([]*PutFavor, 0)
 	putItem1 := &PutFavor{
 		CardType: 1,
-		CardID:   "身份证S1000",
+		CardID:   "身份证S3000",
 		IndemCard: &IndemCard{
 			FieldKVMap: map[string]interface{}{
-				"社保账号": "身份证S1000",
-				"民生卡号": "M1000",
+				"社保账号": "身份证S3000",
+				"民生卡号": "M3000",
 				"卡状态":  1,
 			},
 		},
 		BankCard: &BankCard{
 			FieldKVMap: map[string]interface{}{
-				"银行卡号": "Y1000",
+				"银行卡号": "Y3000",
 				"发卡银行": "工商银行",
 			},
 		},
 		AssetsInfo: &AssetsInfo{
 			FieldKVMap: map[string]interface{}{
 				"社保身份": 0,
-				"残疾级别": 1,
 			},
 		},
 	}
 
 	putItem2 := &PutFavor{
 		CardType: 1,
-		CardID:   "身份证S2000",
+		CardID:   "身份证S4000",
 		IndemCard: &IndemCard{
 			FieldKVMap: map[string]interface{}{
-				"社保账号": "身份证S2000",
-				"民生卡号": "M2000",
+				"社保账号": "身份证S4000",
+				"民生卡号": "M4000",
 				"卡状态":  1,
 			},
 		},
 		BankCard: &BankCard{
 			FieldKVMap: map[string]interface{}{
-				"银行卡号": "Y2000",
+				"银行卡号": "Y4000",
 				"发卡银行": "北京银行",
 			},
 		},
 		AssetsInfo: &AssetsInfo{
 			FieldKVMap: map[string]interface{}{
 				"社保身份": 0,
-				"残疾级别": 0,
 			},
 		},
 	}

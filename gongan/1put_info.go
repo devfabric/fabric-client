@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"os"
 	"path/filepath"
@@ -48,17 +49,38 @@ func main() {
 
 	putInfoList := make([]*PutInfo, 0)
 	putItem1 := &PutInfo{
-		SeqNum: "BN1000",
-		Data:   "xml-encode-bytes",
+		PackID: "BN1000",
+		CardID: "100XXXX",
+		Value:  []byte("xml bytes"),
+		Dtime:  time.Now().Unix(),
+		SysID:  1,
 	}
 
 	putItem2 := &PutInfo{
-		SeqNum: "BN2000",
-		Data:   "xml-encode-bytes",
+		PackID: "BN1000",
+		CardID: "200XXXX",
+		Value:  []byte("xml bytes"),
+		Dtime:  time.Now().Unix(),
+		SysID:  1,
 	}
 
-	putInfoList = append(putInfoList, putItem1)
-	putInfoList = append(putInfoList, putItem2)
+	putItem3 := &PutInfo{
+		PackID: "BN2000",
+		CardID: "300XXXX",
+		Value:  []byte("xml bytes"),
+		Dtime:  time.Now().Unix(),
+		SysID:  2,
+	}
+
+	putItem4 := &PutInfo{
+		PackID: "BN2000",
+		CardID: "400XXXX",
+		Value:  []byte("xml bytes"),
+		Dtime:  time.Now().Unix(),
+		SysID:  2,
+	}
+	putInfoList = append(putInfoList, putItem1, putItem2)
+	putInfoList = append(putInfoList, putItem3, putItem4)
 
 	arrayList, err := json.Marshal(putInfoList)
 	if err != nil {

@@ -55,7 +55,8 @@ func main() {
 	}
 
 	getInfo := &GetInfo{
-		SeqNum: "BN1000",
+		PackID: "BN2000",
+		CardID: "300XXXX",
 	}
 
 	getInfoBys, err := json.Marshal(getInfo)

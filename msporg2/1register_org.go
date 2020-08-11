@@ -45,7 +45,7 @@ func main() {
 		return
 	}
 
-	payLoad, err := fabric.InvokeChaincodeWithEvent(fabConfig.ChaincodeID, "User1", "register_org", [][]byte{[]byte("人社局"), []byte(EvRegisterOrg)})
+	payLoad, err := fabric.InvokeChaincodeWithEvent(fabConfig.ChaincodeID, "User1", "register_org", [][]byte{[]byte("民政局"), []byte(EvRegisterOrg)})
 	if err != nil {
 		fmt.Println(err.Error())
 		return

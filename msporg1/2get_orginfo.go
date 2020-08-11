@@ -60,7 +60,7 @@ func main() {
 	}
 	fmt.Println(string(payLoad))
 
-	payLoad, err = fabric.QueryChaincode(fabConfig.ChaincodeID, "User1", "get_orginfo", [][]byte{nil})
+	payLoad, err = fabric.QueryChaincode(fabConfig.ChaincodeID, "User1", "get_orginfo", nil)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
